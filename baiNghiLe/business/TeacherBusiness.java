@@ -31,6 +31,7 @@ public class TeacherBusiness {
                     updateTeacher(scanner);
                     break;
                 case 4:
+                    deleteTeacher(scanner);
                     break;
                 case 5:
                     System.out.println("Thoát menu Teacher!");
@@ -126,5 +127,22 @@ public class TeacherBusiness {
             }
         }while (choice!=8);
         displayListTeacher();
+    }
+
+    public static void deleteTeacher(Scanner scanner) {
+        if(UniversityManager.teacherList.isEmpty()){
+            return;
+        }
+        int id = Validator.ValidateInt(scanner, "Nhập vào id giảng viên cập nhập: ", 1);
+        int index = indexId(id);
+        if(index == -1){
+            System.out.println("Không tìm thấy id nào!");
+            return;
+        }
+        if(UniversityManager.classList.stream().anyMatch(c -> c.getTeacherId()==id)){
+            System.out.println("Giảng viên đã có lớp, không thể xóa");
+            return;
+        }
+        UniversityManager.teacherList.remove(index);
     }
 }
