@@ -30,6 +30,7 @@ public class StudentBusiness {
                     updateStudent(scanner);
                     break;
                 case 4:
+                    deleteStudent(scanner);
                     break;
                 case 5:
                     System.out.println("Thoát menu Student!");
@@ -125,5 +126,23 @@ public class StudentBusiness {
             }
         }while (choice!=8);
         displayListStudent();
+    }
+
+    public static void deleteStudent(Scanner scanner) {
+        if(UniversityManager.studentList.isEmpty()){
+            return;
+        }
+        System.out.println("Nhập vào id sinh viên cập nhập: ");
+        String id = scanner.nextLine();
+        int index = indexId(id);
+        if(index == -1){
+            System.out.println("Không tìm thấy id nào!");
+            return;
+        }
+        if(UniversityManager.registerList.stream().anyMatch(c -> c.getStudentId().equals(id))){
+            System.out.println("Sinh viên đã đăng ký khóa học, không thể xóa");
+            return;
+        }
+        UniversityManager.studentList.remove(index);
     }
 }
