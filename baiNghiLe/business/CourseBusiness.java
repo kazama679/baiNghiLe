@@ -31,6 +31,7 @@ public class CourseBusiness {
                     updateCourse(scanner);
                     break;
                 case 4:
+                    deleteCourse(scanner);
                     break;
                 case 5:
                     System.out.println("Thoát menu Course!");
@@ -104,5 +105,23 @@ public class CourseBusiness {
             }
         }while (choice!=3);
         displayListCourse();
+    }
+    
+    public static void deleteCourse(Scanner scanner) {
+        if(UniversityManager.courseList.isEmpty()){
+            return;
+        }
+        System.out.println("Nhập vào id khóa học muốn cập nhập: ");
+        String id = scanner.nextLine();
+        int index = indexId(id);
+        if(index == -1){
+            System.out.println("Không tìm thấy id nào!");
+            return;
+        }
+        if(UniversityManager.classList.stream().anyMatch(c -> c.getCourseId().equals(id))){
+            System.out.println("Khóa học đã có lớp, không thể xóa");
+            return;
+        }
+        UniversityManager.courseList.remove(index);
     }
 }
